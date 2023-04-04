@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Criptografia</title>
+{#        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>#}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card text-center text-uppercase">
+                        <div class="card-header bg-info">
+                            <h5 class="card-title">SISTEMA DE CRIPTOGRAFIA</h5>
+                        </div>
+                        <div class="card-body bg-light">
+                            <h6>CRIADO POR MARCOS HIROSHI</h6>
+                            <p class="card-text">Este é um programa simples de criptografia simétrica similar à Criptografia de Cesar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">CRIPTOGRAFE UMA MENSAGEM</h5>
+                            <p class="card-text">Escreva uma mensagem que será criptografada, depois escolha uma chave numérica que só você e o remetente podem ter.</p>
+                            <div class="form-group">
+                                <label for="id_cripto">MENSAGEM</label>
+                                <textarea name="cripto" cols="40" rows="5" class="form-control" placeholder="Escreva uma mensagem" id="id_cripto"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_chave_cripto">CHAVE</label>
+                                <input type="number" name="chave_cripto" class="form-control" id="id_chave_cripto">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_cripto_ok">MENSAGEM CRIPTOGRAFADA</label>
+                                <textarea cols="40" rows="5" class="form-control" id="id_cripto_ok" disabled></textarea>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-info float-right criptografia">CRIPTOGARFAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">DESCRIPTOGRAFE UMA MENSAGEM</h5>
+                            <p class="card-text">Escreva a mensagem criptografada, depois insira a chave numérica que só você e o destinatário podem ter.</p>
+                            <div class="form-group">
+                                <label for="id_descripto">MENSAGEM</label>
+                                <textarea name="descripto" cols="40" rows="5" class="form-control" placeholder="Escreva o código criptografado" id="id_descripto"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_chave_descripto">CHAVE</label>
+                                <input type="number" name="chave_descripto" class="form-control" id="id_chave_descripto">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_descripto_ok">MENSAGEM DESCRIPTOGRAFADA</label>
+                                <textarea cols="40" rows="5" class="form-control" id="id_descripto_ok" disabled></textarea>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-info float-right descriptografia">DESCRIPTOGARFAR</button>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+{#        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>#}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('.criptografia').click(function() {
+                    $.ajax({
+                        url: '{% url 'ajax_cripto' %}',
+                        data: {
+                            'mensagem': $('#id_cripto').val(),
+                            'chave': $('#id_chave_cripto').val()
+                        },
+                        beforeSend: function() {
+                            $('#id_cripto_ok').val("");
+                        },
+                        success: function (data) {
+                            $('#id_cripto_ok').val(data.mensagem);
+                        }
+                    });
+                });
+
+                $('.descriptografia').click(function() {
+                    $.ajax({
+                        url: '{% url 'ajax_descripto' %}',
+                        data: {
+                            'mensagem': $('#id_descripto').val(),
+                            'chave': $('#id_chave_descripto').val()
+                        },
+                        beforeSend: function() {
+                            $('#id_descripto_ok').val("");
+                        },
+                        success: function (data) {
+                            $('#id_descripto_ok').val(data.mensagem);
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
